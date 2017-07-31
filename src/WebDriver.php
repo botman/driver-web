@@ -121,9 +121,11 @@ class WebDriver extends HttpDriver
             if ($message instanceof WebAccess) {
                 $reply = $message->toWebDriver();
             } elseif ($message instanceof OutgoingMessage) {
+                $attachmentData = (is_null($message->getAttachment())) ? null : $message->getAttachment()->toWebDriver();
                 $reply = [
                     'type' => 'text',
                     'text' => $message->getText(),
+                    'attachment' => $attachmentData,
                 ];
             }
 

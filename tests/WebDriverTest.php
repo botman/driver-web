@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use BotMan\BotMan\Messages\Attachments\Image;
 use Mockery as m;
 use BotMan\BotMan\Http\Curl;
 use PHPUnit_Framework_TestCase;
@@ -114,7 +115,26 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->sendPayload($payload);
         $driver->messagesHandled();
 
-        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API"},{"type":"text","text":"Test two From API"}]}');
+        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API","attachment":null},{"type":"text","text":"Test two From API","attachment":null}]}');
+    }
+
+    /** @test */
+    public function it_can_message_attachments()
+    {
+        $driver = $this->getDriver([
+            'driver' => 'web',
+            'message' => 'Hi Julia',
+            'userId' => '12345',
+        ]);
+
+        $message = new IncomingMessage('', '', '1234567890');
+
+        $outgoing = OutgoingMessage::create('Test one From API')->withAttachment(Image::url('some-image'));
+        $payload = $driver->buildServicePayload($outgoing, $message);
+        $driver->sendPayload($payload);
+        $driver->messagesHandled();
+
+        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API","attachment":{"url":"some-image","title":null}}]}');
     }
 
     /**
