@@ -2,11 +2,11 @@
 
 namespace Tests;
 
-use BotMan\BotMan\Messages\Attachments\Image;
 use Mockery as m;
 use BotMan\BotMan\Http\Curl;
 use PHPUnit_Framework_TestCase;
 use BotMan\Drivers\Web\WebDriver;
+use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Symfony\Component\HttpFoundation\Request;
 use BotMan\Drivers\Facebook\Extensions\Element;
