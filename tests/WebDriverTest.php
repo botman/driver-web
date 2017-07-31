@@ -2,25 +2,25 @@
 
 namespace Tests;
 
+use Mockery as m;
 use BotMan\BotMan\Http\Curl;
-use BotMan\BotMan\Messages\Incoming\IncomingMessage;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use PHPUnit_Framework_TestCase;
+use BotMan\Drivers\Web\WebDriver;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
+use Symfony\Component\HttpFoundation\Request;
 use BotMan\Drivers\Facebook\Extensions\Element;
-use BotMan\Drivers\Facebook\Extensions\ElementButton;
-use BotMan\Drivers\Facebook\Extensions\GenericTemplate;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use BotMan\BotMan\Messages\Incoming\IncomingMessage;
+use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use BotMan\Drivers\Facebook\Extensions\ListTemplate;
+use BotMan\Drivers\Facebook\Extensions\ElementButton;
+use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
 use BotMan\Drivers\Facebook\Extensions\ReceiptAddress;
-use BotMan\Drivers\Facebook\Extensions\ReceiptAdjustment;
 use BotMan\Drivers\Facebook\Extensions\ReceiptElement;
 use BotMan\Drivers\Facebook\Extensions\ReceiptSummary;
+use BotMan\Drivers\Facebook\Extensions\GenericTemplate;
 use BotMan\Drivers\Facebook\Extensions\ReceiptTemplate;
-use BotMan\Drivers\Web\WebDriver;
-use Mockery as m;
-use PHPUnit_Framework_TestCase;
-use Symfony\Component\HttpFoundation\Request;
+use BotMan\Drivers\Facebook\Extensions\ReceiptAdjustment;
 
 class WebDriverTest extends PHPUnit_Framework_TestCase
 {
