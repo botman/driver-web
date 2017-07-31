@@ -1,5 +1,9 @@
 # BotMan Web Driver
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/botman/driver-web.svg?style=flat-square)](https://packagist.org/packages/botman/driver-web)
+[![Build Status](https://travis-ci.org/botman/driver-web.svg?branch=master)](https://travis-ci.org/botman/driver-web)
+[![codecov](https://codecov.io/gh/botman/driver-web/branch/master/graph/badge.svg)](https://codecov.io/gh/botman/driver-web)
+
 BotMan driver to use [BotMan](https://github.com/botman/botman) within your website / API
 
 ## Contributing
