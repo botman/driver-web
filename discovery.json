@@ -1,0 +1,5 @@
+{
+    "botman/driver": [
+        "BotMan\\Drivers\\Web\\WebDriver"
+    ]
+}
