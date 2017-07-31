@@ -7,8 +7,8 @@ use Illuminate\Support\Collection;
 use BotMan\BotMan\Drivers\HttpDriver;
 use BotMan\BotMan\Interfaces\WebAccess;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use Symfony\Component\HttpFoundation\Request;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
@@ -113,7 +113,8 @@ class WebDriver extends HttpDriver
      * @param $messages
      * @return array
      */
-    protected function buildReply($messages) {
+    protected function buildReply($messages)
+    {
         $replyData = Collection::make($messages)->transform(function ($message) {
             $reply = [];
 
