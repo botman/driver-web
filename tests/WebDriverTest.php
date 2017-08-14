@@ -37,7 +37,16 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
             $htmlInterface = m::mock(Curl::class);
         }
 
-        return new WebDriver($request, [], $htmlInterface);
+        $config = [
+            'web' => [
+                'matchingData' => [
+                    'custom' => 'my-custom-string',
+                    'driver' => 'web',
+                ]
+            ]
+        ];
+
+        return new WebDriver($request, $config, $htmlInterface);
     }
 
     /** @test */
@@ -59,6 +68,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
 
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -81,6 +91,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -92,6 +103,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -103,6 +115,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -123,6 +136,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -144,6 +158,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -167,6 +182,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -191,6 +207,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -227,6 +244,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);
@@ -262,6 +280,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->getDriver([
             'driver' => 'web',
+            'custom' => 'my-custom-string',
             'message' => 'Hi Julia',
             'userId' => '12345',
         ]);

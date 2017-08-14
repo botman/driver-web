@@ -33,6 +33,7 @@ class WebDriver extends HttpDriver
     {
         $this->payload = $request->request->all();
         $this->event = Collection::make($this->payload);
+        $this->config = Collection::make($this->config->get('web', []));
     }
 
     /**
@@ -51,7 +52,7 @@ class WebDriver extends HttpDriver
      */
     public function matchesRequest()
     {
-        return $this->event->get('driver') === 'web';
+        return Collection::make($this->config->get('matchingData'))->diffAssoc($this->event)->isEmpty();
     }
 
     /**
