@@ -42,8 +42,8 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
                 'matchingData' => [
                     'custom' => 'my-custom-string',
                     'driver' => 'web',
-                ]
-            ]
+                ],
+            ],
         ];
 
         return new WebDriver($request, $config, $htmlInterface);
