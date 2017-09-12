@@ -31,7 +31,7 @@ class WebDriver extends HttpDriver
      */
     public function buildPayload(Request $request)
     {
-        $this->payload = $request->request->all();
+        $this->payload = $request->all();
         $this->event = Collection::make($this->payload);
         $this->config = Collection::make($this->config->get('web', []));
     }
