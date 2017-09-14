@@ -26,6 +26,9 @@ class WebDriver extends HttpDriver
     /** @var string */
     protected $errorMessage = '';
 
+    /** @var array */
+    protected $messages = [];
+
     /**
      * @param Request $request
      */
@@ -71,10 +74,13 @@ class WebDriver extends HttpDriver
      */
     public function getMessages()
     {
-        $message = $this->event->get('message');
-        $userId = $this->event->get('userId');
+        if (empty($this->messages)) {
+            $message = $this->event->get('message');
+            $userId = $this->event->get('userId');
+            $this->messages = [new IncomingMessage($message, $userId, $userId, $this->payload)];
+        }
 
-        return [new IncomingMessage($message, $userId, $userId, $this->payload)];
+        return $this->messages;
     }
 
     /**
