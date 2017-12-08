@@ -64,7 +64,9 @@ class WebDriver extends HttpDriver
      */
     public function getConversationAnswer(IncomingMessage $message)
     {
-        return Answer::create($message->getText())->setMessage($message);
+        return Answer::create($message->getText())
+            ->setMessage($message)
+            ->setInteractiveReply($this->event->get('interactive', false));
     }
 
     /**
