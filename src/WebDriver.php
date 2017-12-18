@@ -140,10 +140,9 @@ class WebDriver extends HttpDriver
                     'type' => 'text',
                     'text' => $message->getText(),
                     'attachment' => $attachmentData,
-                    'additionalParameters' => $additionalParameters
                 ];
             }
-
+            $reply['additionalParameters'] = $additionalParameters;
             return $reply;
         })->toArray();
 

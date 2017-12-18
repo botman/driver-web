@@ -185,6 +185,34 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->messagesHandled();
 
         $json = $question->toWebDriver();
+        $json['additionalParameters'] = [];
+
+        $this->expectOutputString('{"status":200,"messages":['.json_encode($json).']}');
+    }
+
+    /**
+     * @test
+     **/
+    public function it_passes_additional_parameters()
+    {
+        $driver = $this->getDriver([
+            'driver' => 'web',
+            'custom' => 'my-custom-string',
+            'message' => 'Hi Julia',
+            'userId' => '12345',
+        ]);
+
+        $message = new IncomingMessage('', '', '1234567890');
+        $question = Question::create('What do want to do?')
+            ->addButton(Button::create('Stay')->image('https://test.com/image.png')->value('stay'))
+            ->addButton(Button::create('Leave'));
+        $payload = $driver->buildServicePayload($question, $message, ['foo' => 'bar']);
+        $driver->sendPayload($payload);
+        $driver->messagesHandled();
+
+        $json = $question->toWebDriver();
+        $json['additionalParameters'] = ['foo' => 'bar'];
+
         $this->expectOutputString('{"status":200,"messages":['.json_encode($json).']}');
     }
 
@@ -210,6 +238,8 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->messagesHandled();
 
         $json = $template->toWebDriver();
+        $json['additionalParameters'] = [];
+
         $this->expectOutputString('{"status":200,"messages":['.json_encode($json).']}');
     }
 
@@ -247,6 +277,8 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->messagesHandled();
 
         $json = $template->toWebDriver();
+        $json['additionalParameters'] = [];
+
         $this->expectOutputString('{"status":200,"messages":['.json_encode($json).']}');
     }
 
@@ -283,6 +315,8 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->messagesHandled();
 
         $json = $template->toWebDriver();
+        $json['additionalParameters'] = [];
+
         $this->expectOutputString('{"status":200,"messages":['.json_encode($json).']}');
     }
 
@@ -318,6 +352,8 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->messagesHandled();
 
         $json = $template->toWebDriver();
+        $json['additionalParameters'] = [];
+
         $this->expectOutputString('{"status":200,"messages":['.json_encode($json).']}');
     }
 }
