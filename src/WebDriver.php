@@ -108,7 +108,7 @@ class WebDriver extends HttpDriver
 
         return [
             'message' => $message,
-            'additionalParameters' => $additionalParameters
+            'additionalParameters' => $additionalParameters,
         ];
     }
 
@@ -140,7 +140,7 @@ class WebDriver extends HttpDriver
                     'type' => 'text',
                     'text' => $message->getText(),
                     'attachment' => $attachmentData,
-                    'additionalParameters' => $additionalParameters
+                    'additionalParameters' => $additionalParameters,
                 ];
             }
 
