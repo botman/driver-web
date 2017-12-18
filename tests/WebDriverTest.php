@@ -141,7 +141,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->sendPayload($payload);
         $driver->messagesHandled();
 
-        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API","attachment":null},{"type":"text","text":"Test two From API","attachment":null}]}');
+        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API","attachment":null,"additionalParameters":[]},{"type":"text","text":"Test two From API","attachment":null,"additionalParameters":[]}]}');
     }
 
     /** @test */
@@ -161,7 +161,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $driver->sendPayload($payload);
         $driver->messagesHandled();
 
-        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API","attachment":{"type":"image","url":"some-image","title":null}}]}');
+        $this->expectOutputString('{"status":200,"messages":[{"type":"text","text":"Test one From API","attachment":{"type":"image","url":"some-image","title":null},"additionalParameters":[]}]}');
     }
 
     /**

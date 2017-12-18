@@ -106,7 +106,10 @@ class WebDriver extends HttpDriver
             $this->replyStatusCode = 500;
         }
 
-        return $message;
+        return [
+            'message' => $message,
+            'additionalParameters' => $additionalParameters
+        ];
     }
 
     /**
@@ -124,8 +127,10 @@ class WebDriver extends HttpDriver
      */
     protected function buildReply($messages)
     {
-        $replyData = Collection::make($messages)->transform(function ($message) {
+        $replyData = Collection::make($messages)->transform(function ($replyData) {
             $reply = [];
+            $message = $replyData['message'];
+            $additionalParameters = $replyData['additionalParameters'];
 
             if ($message instanceof WebAccess) {
                 $reply = $message->toWebDriver();
@@ -135,6 +140,7 @@ class WebDriver extends HttpDriver
                     'type' => 'text',
                     'text' => $message->getText(),
                     'attachment' => $attachmentData,
+                    'additionalParameters' => $additionalParameters
                 ];
             }
 
