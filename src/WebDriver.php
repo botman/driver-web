@@ -108,7 +108,7 @@ class WebDriver extends HttpDriver
 
         return [
             'message' => $message,
-            'additionalParameters' => $additionalParameters
+            'additionalParameters' => $additionalParameters,
         ];
     }
 
