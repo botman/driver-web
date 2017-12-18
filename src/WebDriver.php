@@ -143,6 +143,7 @@ class WebDriver extends HttpDriver
                 ];
             }
             $reply['additionalParameters'] = $additionalParameters;
+
             return $reply;
         })->toArray();
 
