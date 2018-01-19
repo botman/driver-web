@@ -11,11 +11,11 @@ use BotMan\BotMan\Messages\Attachments\Audio;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class WebDriver extends HttpDriver
 {
@@ -228,6 +228,7 @@ class WebDriver extends HttpDriver
                 } else {
                     $path = $file['tmp_name'];
                 }
+
                 return new Image($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Image::PATTERN);
@@ -239,6 +240,7 @@ class WebDriver extends HttpDriver
                 } else {
                     $path = $file['tmp_name'];
                 }
+
                 return new Audio($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Audio::PATTERN);
@@ -250,6 +252,7 @@ class WebDriver extends HttpDriver
                 } else {
                     $path = $file['tmp_name'];
                 }
+
                 return new Video($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Video::PATTERN);
