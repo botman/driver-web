@@ -50,6 +50,7 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
 
         return new WebDriver($request, $config, $htmlInterface);
     }
+
     /**
      * @param $responseData
      * @param array $files
@@ -123,9 +124,9 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
             'file1' => [
                 'name' => 'MyFile.png',
                 'type' => 'image/png',
-                'tmp_name' => __DIR__ . '/fixtures/image.png',
-                'size' => 1234
-            ]
+                'tmp_name' => __DIR__.'/fixtures/image.png',
+                'size' => 1234,
+            ],
         ]);
         /** @var IncomingMessage $message */
         $message = $driver->getMessages()[0];
@@ -146,9 +147,9 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
             'file1' => [
                 'name' => 'MyFile.png',
                 'type' => 'image/png',
-                'tmp_name' => __DIR__ . '/fixtures/video.mp4',
-                'size' => 1234
-            ]
+                'tmp_name' => __DIR__.'/fixtures/video.mp4',
+                'size' => 1234,
+            ],
         ]);
         /** @var IncomingMessage $message */
         $message = $driver->getMessages()[0];
@@ -169,9 +170,9 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
             'file1' => [
                 'name' => 'MyFile.png',
                 'type' => 'image/png',
-                'tmp_name' => __DIR__ . '/fixtures/audio.mp3',
-                'size' => 1234
-            ]
+                'tmp_name' => __DIR__.'/fixtures/audio.mp3',
+                'size' => 1234,
+            ],
         ]);
         /** @var IncomingMessage $message */
         $message = $driver->getMessages()[0];
