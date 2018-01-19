@@ -2,14 +2,14 @@
 
 namespace BotMan\Drivers\Web;
 
-use BotMan\BotMan\Messages\Attachments\Audio;
-use BotMan\BotMan\Messages\Attachments\Image;
-use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Users\User;
 use Illuminate\Support\Collection;
 use BotMan\BotMan\Drivers\HttpDriver;
 use BotMan\BotMan\Interfaces\WebAccess;
 use BotMan\BotMan\Messages\Incoming\Answer;
+use BotMan\BotMan\Messages\Attachments\Audio;
+use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -248,7 +248,8 @@ class WebDriver extends HttpDriver
      * @param string $mime
      * @return string
      */
-    protected function getDataURI($file, $mime = '') {
+    protected function getDataURI($file, $mime = '')
+    {
         return 'data: '.(function_exists('mime_content_type') ? mime_content_type($file) : $mime).';base64,'.base64_encode(file_get_contents($file));
     }
 }
