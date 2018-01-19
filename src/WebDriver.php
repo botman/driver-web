@@ -11,6 +11,7 @@ use BotMan\BotMan\Messages\Attachments\Audio;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
@@ -222,19 +223,34 @@ class WebDriver extends HttpDriver
 
         if ($attachment === self::ATTACHMENT_IMAGE) {
             $images = $this->files->map(function ($file) {
-                return new Image($this->getDataURI($file['tmp_name']));
+                if ($file instanceof UploadedFile) {
+                    $path = $file->getRealPath();
+                } else {
+                    $path = $file['tmp_name'];
+                }
+                return new Image($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Image::PATTERN);
             $incomingMessage->setImages($images);
         } elseif ($attachment === self::ATTACHMENT_AUDIO) {
             $images = $this->files->map(function ($file) {
-                return new Audio($this->getDataURI($file['tmp_name']));
+                if ($file instanceof UploadedFile) {
+                    $path = $file->getRealPath();
+                } else {
+                    $path = $file['tmp_name'];
+                }
+                return new Audio($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Audio::PATTERN);
             $incomingMessage->setAudio($images);
         } elseif ($attachment === self::ATTACHMENT_VIDEO) {
             $images = $this->files->map(function ($file) {
-                return new Video($this->getDataURI($file['tmp_name']));
+                if ($file instanceof UploadedFile) {
+                    $path = $file->getRealPath();
+                } else {
+                    $path = $file['tmp_name'];
+                }
+                return new Video($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Video::PATTERN);
             $incomingMessage->setVideos($images);
