@@ -6,7 +6,9 @@ use Mockery as m;
 use BotMan\BotMan\Http\Curl;
 use PHPUnit_Framework_TestCase;
 use BotMan\Drivers\Web\WebDriver;
+use BotMan\BotMan\Messages\Attachments\Audio;
 use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Symfony\Component\HttpFoundation\Request;
 use BotMan\Drivers\Facebook\Extensions\Element;
@@ -33,6 +35,30 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     private function getDriver($responseData, $htmlInterface = null)
     {
         $request = Request::create('', 'POST', $responseData);
+        if ($htmlInterface === null) {
+            $htmlInterface = m::mock(Curl::class);
+        }
+
+        $config = [
+            'web' => [
+                'matchingData' => [
+                    'custom' => 'my-custom-string',
+                    'driver' => 'web',
+                ],
+            ],
+        ];
+
+        return new WebDriver($request, $config, $htmlInterface);
+    }
+    /**
+     * @param $responseData
+     * @param array $files
+     * @param null $htmlInterface
+     * @return WebDriver
+     */
+    private function getDriverWithFiles($responseData, $files, $htmlInterface = null)
+    {
+        $request = Request::create('', 'POST', $responseData, [], $files);
         if ($htmlInterface === null) {
             $htmlInterface = m::mock(Curl::class);
         }
@@ -87,6 +113,75 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_returns_images()
+    {
+        $driver = $this->getDriverWithFiles([
+            'driver' => 'web',
+            'userId' => '12345',
+            'attachment' => WebDriver::ATTACHMENT_IMAGE,
+        ], [
+            'file1' => [
+                'name' => 'MyFile.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/fixtures/image.png',
+                'size' => 1234
+            ]
+        ]);
+        /** @var IncomingMessage $message */
+        $message = $driver->getMessages()[0];
+        $images = $message->getImages();
+        $this->assertCount(1, $images);
+        $this->assertInstanceOf(Image::class, $images[0]);
+        $this->assertSame(Image::PATTERN, $message->getText());
+    }
+
+    /** @test */
+    public function it_returns_videos()
+    {
+        $driver = $this->getDriverWithFiles([
+            'driver' => 'web',
+            'userId' => '12345',
+            'attachment' => WebDriver::ATTACHMENT_VIDEO,
+        ], [
+            'file1' => [
+                'name' => 'MyFile.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/fixtures/video.mp4',
+                'size' => 1234
+            ]
+        ]);
+        /** @var IncomingMessage $message */
+        $message = $driver->getMessages()[0];
+        $videos = $message->getVideos();
+        $this->assertCount(1, $videos);
+        $this->assertInstanceOf(Video::class, $videos[0]);
+        $this->assertSame(Video::PATTERN, $message->getText());
+    }
+
+    /** @test */
+    public function it_returns_audio()
+    {
+        $driver = $this->getDriverWithFiles([
+            'driver' => 'web',
+            'userId' => '12345',
+            'attachment' => WebDriver::ATTACHMENT_AUDIO,
+        ], [
+            'file1' => [
+                'name' => 'MyFile.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/fixtures/audio.mp3',
+                'size' => 1234
+            ]
+        ]);
+        /** @var IncomingMessage $message */
+        $message = $driver->getMessages()[0];
+        $audio = $message->getAudio();
+        $this->assertCount(1, $audio);
+        $this->assertInstanceOf(Audio::class, $audio[0]);
+        $this->assertSame(Audio::PATTERN, $message->getText());
+    }
+
+    /** @test */
     public function it_returns_the_message_object_by_reference()
     {
         $driver = $this->getDriver([
@@ -121,6 +216,19 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
             'userId' => '12345',
         ]);
         $this->assertSame('12345', $driver->getMessages()[0]->getSender());
+    }
+
+    /** @test */
+    public function it_allows_custom_sender_id()
+    {
+        $driver = $this->getDriver([
+            'driver' => 'web',
+            'custom' => 'my-custom-string',
+            'message' => 'Hi Julia',
+            'userId' => '12345',
+            'sender' => '54321',
+        ]);
+        $this->assertSame('54321', $driver->getMessages()[0]->getSender());
     }
 
     /** @test */

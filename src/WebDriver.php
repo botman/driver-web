@@ -2,6 +2,9 @@
 
 namespace BotMan\Drivers\Web;
 
+use BotMan\BotMan\Messages\Attachments\Audio;
+use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Users\User;
 use Illuminate\Support\Collection;
 use BotMan\BotMan\Drivers\HttpDriver;
@@ -17,6 +20,11 @@ class WebDriver extends HttpDriver
 {
     const DRIVER_NAME = 'Web';
 
+    const ATTACHMENT_IMAGE = 'image';
+    const ATTACHMENT_AUDIO = 'audio';
+    const ATTACHMENT_VIDEO = 'video';
+    const ATTACHMENT_LOCATION = 'location';
+
     /** @var OutgoingMessage[] */
     protected $replies = [];
 
@@ -29,6 +37,9 @@ class WebDriver extends HttpDriver
     /** @var array */
     protected $messages = [];
 
+    /** @var array */
+    protected $files = [];
+
     /**
      * @param Request $request
      */
@@ -36,6 +47,7 @@ class WebDriver extends HttpDriver
     {
         $this->payload = $request->request->all();
         $this->event = Collection::make($this->payload);
+        $this->files = Collection::make($request->files->all());
         $this->config = Collection::make($this->config->get('web', []));
     }
 
@@ -80,7 +92,13 @@ class WebDriver extends HttpDriver
         if (empty($this->messages)) {
             $message = $this->event->get('message');
             $userId = $this->event->get('userId');
-            $this->messages = [new IncomingMessage($message, $userId, $userId, $this->payload)];
+            $sender = $this->event->get('sender', $userId);
+
+            $incomingMessage = new IncomingMessage($message, $sender, $userId, $this->payload);
+
+            $incomingMessage = $this->addAttachments($incomingMessage);
+
+            $this->messages = [$incomingMessage];
         }
 
         return $this->messages;
@@ -190,5 +208,47 @@ class WebDriver extends HttpDriver
     public function sendRequest($endpoint, array $parameters, IncomingMessage $matchingMessage)
     {
         // Not available with the web driver.
+    }
+
+    /**
+     * Add potential attachments to the message object.
+     *
+     * @param IncomingMessage $incomingMessage
+     * @return IncomingMessage
+     */
+    protected function addAttachments($incomingMessage)
+    {
+        $attachment = $this->event->get('attachment');
+
+        if ($attachment === self::ATTACHMENT_IMAGE) {
+            $images = $this->files->map(function ($file) {
+                return new Image($this->getDataURI($file['tmp_name']));
+            })->values()->toArray();
+            $incomingMessage->setText(Image::PATTERN);
+            $incomingMessage->setImages($images);
+        } elseif ($attachment === self::ATTACHMENT_AUDIO) {
+            $images = $this->files->map(function ($file) {
+                return new Audio($this->getDataURI($file['tmp_name']));
+            })->values()->toArray();
+            $incomingMessage->setText(Audio::PATTERN);
+            $incomingMessage->setAudio($images);
+        } elseif ($attachment === self::ATTACHMENT_VIDEO) {
+            $images = $this->files->map(function ($file) {
+                return new Video($this->getDataURI($file['tmp_name']));
+            })->values()->toArray();
+            $incomingMessage->setText(Video::PATTERN);
+            $incomingMessage->setVideos($images);
+        }
+
+        return $incomingMessage;
+    }
+
+    /**
+     * @param $file
+     * @param string $mime
+     * @return string
+     */
+    protected function getDataURI($file, $mime = '') {
+        return 'data: '.(function_exists('mime_content_type') ? mime_content_type($file) : $mime).';base64,'.base64_encode(file_get_contents($file));
     }
 }
