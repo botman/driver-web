@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use BotMan\BotMan\Messages\Attachments\File;
 use Mockery as m;
 use BotMan\BotMan\Http\Curl;
 use PHPUnit_Framework_TestCase;
@@ -180,6 +181,29 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
         $this->assertCount(1, $audio);
         $this->assertInstanceOf(Audio::class, $audio[0]);
         $this->assertSame(Audio::PATTERN, $message->getText());
+    }
+
+    /** @test */
+    public function it_returns_files()
+    {
+        $driver = $this->getDriverWithFiles([
+            'driver' => 'web',
+            'userId' => '12345',
+            'attachment' => WebDriver::ATTACHMENT_FILE,
+        ], [
+            'file1' => [
+                'name' => 'MyFile.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__.'/fixtures/example.md',
+                'size' => 1234,
+            ],
+        ]);
+        /** @var IncomingMessage $message */
+        $message = $driver->getMessages()[0];
+        $files = $message->getFiles();
+        $this->assertCount(1, $files);
+        $this->assertInstanceOf(File::class, $files[0]);
+        $this->assertSame(File::PATTERN, $message->getText());
     }
 
     /** @test */

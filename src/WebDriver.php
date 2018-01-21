@@ -2,6 +2,7 @@
 
 namespace BotMan\Drivers\Web;
 
+use BotMan\BotMan\Messages\Attachments\File;
 use BotMan\BotMan\Users\User;
 use Illuminate\Support\Collection;
 use BotMan\BotMan\Drivers\HttpDriver;
@@ -24,6 +25,7 @@ class WebDriver extends HttpDriver
     const ATTACHMENT_IMAGE = 'image';
     const ATTACHMENT_AUDIO = 'audio';
     const ATTACHMENT_VIDEO = 'video';
+    const ATTACHMENT_FILE = 'file';
     const ATTACHMENT_LOCATION = 'location';
 
     /** @var OutgoingMessage[] */
@@ -234,7 +236,7 @@ class WebDriver extends HttpDriver
             $incomingMessage->setText(Image::PATTERN);
             $incomingMessage->setImages($images);
         } elseif ($attachment === self::ATTACHMENT_AUDIO) {
-            $images = $this->files->map(function ($file) {
+            $audio = $this->files->map(function ($file) {
                 if ($file instanceof UploadedFile) {
                     $path = $file->getRealPath();
                 } else {
@@ -244,9 +246,9 @@ class WebDriver extends HttpDriver
                 return new Audio($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Audio::PATTERN);
-            $incomingMessage->setAudio($images);
+            $incomingMessage->setAudio($audio);
         } elseif ($attachment === self::ATTACHMENT_VIDEO) {
-            $images = $this->files->map(function ($file) {
+            $videos = $this->files->map(function ($file) {
                 if ($file instanceof UploadedFile) {
                     $path = $file->getRealPath();
                 } else {
@@ -256,7 +258,19 @@ class WebDriver extends HttpDriver
                 return new Video($this->getDataURI($path));
             })->values()->toArray();
             $incomingMessage->setText(Video::PATTERN);
-            $incomingMessage->setVideos($images);
+            $incomingMessage->setVideos($videos);
+        } elseif ($attachment === self::ATTACHMENT_FILE) {
+            $files = $this->files->map(function ($file) {
+                if ($file instanceof UploadedFile) {
+                    $path = $file->getRealPath();
+                } else {
+                    $path = $file['tmp_name'];
+                }
+
+                return new File($this->getDataURI($path));
+            })->values()->toArray();
+            $incomingMessage->setText(File::PATTERN);
+            $incomingMessage->setFiles($files);
         }
 
         return $incomingMessage;
