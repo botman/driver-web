@@ -79,10 +79,17 @@ class WebDriver extends HttpDriver
      */
     public function getConversationAnswer(IncomingMessage $message)
     {
+        $interactive = $this->event->get('interactive', false);
+        if (is_string($interactive)) {
+            $interactive = $interactive !== 'false';
+        } else {
+            $interactive = (bool)$interactive;
+        }
+
         return Answer::create($message->getText())
             ->setValue($this->event->get('value', $message->getText()))
             ->setMessage($message)
-            ->setInteractiveReply($this->event->get('interactive', false));
+            ->setInteractiveReply($interactive);
     }
 
     /**
