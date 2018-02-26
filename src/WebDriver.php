@@ -83,7 +83,7 @@ class WebDriver extends HttpDriver
         if (is_string($interactive)) {
             $interactive = $interactive !== 'false';
         } else {
-            $interactive = (bool)$interactive;
+            $interactive = (bool) $interactive;
         }
 
         return Answer::create($message->getText())
