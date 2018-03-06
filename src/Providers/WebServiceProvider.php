@@ -25,6 +25,9 @@ class WebServiceProvider extends ServiceProvider
 
             $this->mergeConfigFrom(__DIR__.'/../../stubs/web.php', 'botman.web');
         }
+
+        $this->loadRoutesFrom(__DIR__.'/../Laravel/routes.php');
+        $this->loadViewsFrom(__DIR__.'/../Laravel/views', 'botman-web');
     }
 
     /**
