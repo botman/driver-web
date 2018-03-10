@@ -41,6 +41,9 @@
         "cs": "php-cs-fixer fix"
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        },
         "laravel": {
             "providers": [
                 "BotMan\\Drivers\\Web\\Providers\\WebServiceProvider"
