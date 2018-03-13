@@ -6,7 +6,6 @@ use BotMan\BotMan\Interfaces\WebAccess;
 
 class TypingIndicator implements WebAccess
 {
-
     /** @var int */
     protected $timeout;
 
@@ -38,7 +37,7 @@ class TypingIndicator implements WebAccess
     {
         return [
             'type' => 'typing_indicator',
-            'timeout' => $this->timeout
+            'timeout' => $this->timeout,
         ];
     }
 }
