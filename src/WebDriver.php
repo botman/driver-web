@@ -3,6 +3,7 @@
 namespace BotMan\Drivers\Web;
 
 use BotMan\BotMan\Users\User;
+use BotMan\Drivers\Web\Extras\TypingIndicator;
 use Illuminate\Support\Collection;
 use BotMan\BotMan\Drivers\HttpDriver;
 use BotMan\BotMan\Interfaces\WebAccess;
@@ -71,6 +72,32 @@ class WebDriver extends HttpDriver
     public function matchesRequest()
     {
         return Collection::make($this->config->get('matchingData'))->diffAssoc($this->event)->isEmpty();
+    }
+
+    /**
+     * @param IncomingMessage $matchingMessage
+     * @return void
+     */
+    public function types(IncomingMessage $matchingMessage)
+    {
+        $this->replies[] = [
+            'message' => TypingIndicator::create(),
+            'additionalParameters' => [],
+        ];
+    }
+
+    /**
+     * Send a typing indicator and wait for the given amount of seconds.
+     * @param IncomingMessage $matchingMessage
+     * @param int $seconds
+     * @return mixed
+     */
+    public function typesAndWaits(IncomingMessage $matchingMessage, int $seconds)
+    {
+        $this->replies[] = [
+            'message' => TypingIndicator::create($seconds),
+            'additionalParameters' => [],
+        ];
     }
 
     /**

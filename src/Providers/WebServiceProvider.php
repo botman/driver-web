@@ -28,6 +28,9 @@ class WebServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../Laravel/routes.php');
         $this->loadViewsFrom(__DIR__.'/../Laravel/views', 'botman-web');
+        $this->publishes([
+            __DIR__.'/../Laravel/views' => resource_path('views/vendor/botman-web')
+        ]);
     }
 
     /**

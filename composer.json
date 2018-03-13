@@ -16,14 +16,14 @@
     ],
     "require": {
         "php": ">=7.0",
-        "botman/botman": "~2.0"
+        "botman/botman": "~3.0"
     },
     "require-dev": {
         "botman/studio-addons": "~1.0",
-        "illuminate/contracts": "~5.5.0",
+        "illuminate/support": "~5.5.0",
         "phpunit/phpunit": "~5.0",
         "mockery/mockery": "dev-master",
-        "botman/driver-facebook": "dev-master",
+        "botman/driver-facebook": "~2.0",
         "ext-curl": "*"
     },
     "autoload": {
@@ -49,5 +49,7 @@
                 "BotMan\\Drivers\\Web\\Providers\\WebServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
