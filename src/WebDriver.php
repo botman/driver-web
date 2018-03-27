@@ -81,7 +81,7 @@ class WebDriver extends HttpDriver
     {
         $interactive = $this->event->get('interactive', false);
         if (is_string($interactive)) {
-            $interactive = $interactive !== 'false';
+            $interactive = ($interactive !== 'false') && ($interactive !== '0');
         } else {
             $interactive = (bool) $interactive;
         }
