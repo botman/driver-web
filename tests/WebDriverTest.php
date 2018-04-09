@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use BotMan\BotMan\Drivers\Events\GenericEvent;
 use Mockery as m;
 use BotMan\BotMan\Http\Curl;
 use PHPUnit_Framework_TestCase;
@@ -101,6 +102,23 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
             'userId' => '12345',
         ]);
         $this->assertTrue($driver->matchesRequest());
+    }
+
+    /** @test */
+    public function it_fires_events()
+    {
+        $driver = $this->getDriver([
+            'driver' => 'api',
+            'eventData' => 'this is a custom event',
+            'eventName' => 'event_name',
+            'userId' => '12345',
+        ]);
+
+        $event = $driver->hasMatchingEvent();
+        $this->assertInstanceOf(GenericEvent::class, $event);
+
+        $this->assertSame('this is a custom event', $event->getPayload());
+        $this->assertSame('event_name', $event->getName());
     }
 
     /** @test */
