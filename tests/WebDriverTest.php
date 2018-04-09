@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use BotMan\BotMan\Drivers\Events\GenericEvent;
 use Mockery as m;
 use BotMan\BotMan\Http\Curl;
 use PHPUnit_Framework_TestCase;
@@ -13,6 +12,7 @@ use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Symfony\Component\HttpFoundation\Request;
+use BotMan\BotMan\Drivers\Events\GenericEvent;
 use BotMan\Drivers\Facebook\Extensions\Element;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;

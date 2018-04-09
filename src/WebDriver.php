@@ -13,9 +13,9 @@ use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Video;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Symfony\Component\HttpFoundation\Request;
+use BotMan\BotMan\Drivers\Events\GenericEvent;
 use BotMan\Drivers\Web\Extras\TypingIndicator;
 use Symfony\Component\HttpFoundation\Response;
-use BotMan\BotMan\Drivers\Events\GenericEvent;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -131,7 +131,6 @@ class WebDriver extends HttpDriver
             $event = new GenericEvent($this->event->get('eventData'));
             $event->setName($this->event->get('eventName'));
         }
-
 
         return $event;
     }
