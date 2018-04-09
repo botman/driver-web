@@ -10,10 +10,10 @@ class TypingIndicator implements WebAccess
     protected $timeout;
 
     /**
-     * @param int $timeout
+     * @param float $timeout
      * @return TypingIndicator
      */
-    public static function create(int $timeout = 1)
+    public static function create(float $timeout = 1)
     {
         return new static($timeout);
     }
