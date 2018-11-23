@@ -51,6 +51,9 @@ class WebDriver extends HttpDriver
     public function buildPayload(Request $request)
     {
         $this->payload = $request->request->all();
+        if(!empty($request->getContent()) && empty($this->payload)){
+            $this->payload = json_decode($request->getContent(), true);
+        }
         $this->event = Collection::make($this->payload);
         $this->files = Collection::make($request->files->all());
         $this->config = Collection::make($this->config->get('web', []));
