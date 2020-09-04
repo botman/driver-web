@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "botman/botman": "~3.0"
+        "botman/botman": "~2.4.1"
     },
     "require-dev": {
         "botman/studio-addons": "~1.0",
