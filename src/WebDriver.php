@@ -211,7 +211,7 @@ class WebDriver extends HttpDriver
                 $attachmentData = (is_null($message->getAttachment())) ? null : $message->getAttachment()->toWebDriver();
                 $reply = [
                     'type' => 'text',
-                    'text' => $message->getText(),
+                    'text' => nl2br($message->getText()),
                     'attachment' => $attachmentData,
                 ];
             }
