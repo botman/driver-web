@@ -2,36 +2,36 @@
 
 namespace Tests;
 
-use Mockery as m;
+use BotMan\BotMan\Drivers\Events\GenericEvent;
 use BotMan\BotMan\Http\Curl;
-use PHPUnit_Framework_TestCase;
-use BotMan\Drivers\Web\WebDriver;
-use BotMan\BotMan\Messages\Attachments\File;
 use BotMan\BotMan\Messages\Attachments\Audio;
+use BotMan\BotMan\Messages\Attachments\File;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Video;
-use BotMan\BotMan\Messages\Outgoing\Question;
-use Symfony\Component\HttpFoundation\Request;
-use BotMan\BotMan\Drivers\Events\GenericEvent;
-use BotMan\Drivers\Facebook\Extensions\Element;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
-use BotMan\Drivers\Facebook\Extensions\ListTemplate;
-use BotMan\Drivers\Facebook\Extensions\ElementButton;
+use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\Drivers\Facebook\Extensions\ButtonTemplate;
+use BotMan\Drivers\Facebook\Extensions\Element;
+use BotMan\Drivers\Facebook\Extensions\ElementButton;
+use BotMan\Drivers\Facebook\Extensions\GenericTemplate;
+use BotMan\Drivers\Facebook\Extensions\ListTemplate;
 use BotMan\Drivers\Facebook\Extensions\ReceiptAddress;
+use BotMan\Drivers\Facebook\Extensions\ReceiptAdjustment;
 use BotMan\Drivers\Facebook\Extensions\ReceiptElement;
 use BotMan\Drivers\Facebook\Extensions\ReceiptSummary;
-use BotMan\Drivers\Facebook\Extensions\GenericTemplate;
 use BotMan\Drivers\Facebook\Extensions\ReceiptTemplate;
-use BotMan\Drivers\Facebook\Extensions\ReceiptAdjustment;
+use BotMan\Drivers\Web\WebDriver;
+use Mockery as m;
+use PHPUnit_Framework_TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class WebDriverTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @param $responseData
-     * @param null $htmlInterface
+     * @param  null  $htmlInterface
      * @return WebDriver
      */
     private function getDriver($responseData, $htmlInterface = null)
@@ -55,8 +55,8 @@ class WebDriverTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param $responseData
-     * @param array $files
-     * @param null $htmlInterface
+     * @param  array  $files
+     * @param  null  $htmlInterface
      * @return WebDriver
      */
     private function getDriverWithFiles($responseData, $files, $htmlInterface = null)
