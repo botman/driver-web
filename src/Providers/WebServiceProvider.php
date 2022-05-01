@@ -2,10 +2,10 @@
 
 namespace BotMan\Drivers\Web\Providers;
 
-use BotMan\Drivers\Web\WebDriver;
-use Illuminate\Support\ServiceProvider;
 use BotMan\BotMan\Drivers\DriverManager;
+use BotMan\Drivers\Web\WebDriver;
 use BotMan\Studio\Providers\StudioServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class WebServiceProvider extends ServiceProvider
 {

@@ -2,23 +2,23 @@
 
 namespace BotMan\Drivers\Web;
 
-use BotMan\BotMan\Users\User;
-use Illuminate\Support\Collection;
+use BotMan\BotMan\Drivers\Events\GenericEvent;
 use BotMan\BotMan\Drivers\HttpDriver;
 use BotMan\BotMan\Interfaces\WebAccess;
-use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Attachments\File;
 use BotMan\BotMan\Messages\Attachments\Audio;
+use BotMan\BotMan\Messages\Attachments\File;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Attachments\Video;
-use BotMan\BotMan\Messages\Outgoing\Question;
-use Symfony\Component\HttpFoundation\Request;
-use BotMan\BotMan\Drivers\Events\GenericEvent;
-use BotMan\Drivers\Web\Extras\TypingIndicator;
-use Symfony\Component\HttpFoundation\Response;
+use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use BotMan\BotMan\Messages\Outgoing\Question;
+use BotMan\BotMan\Users\User;
+use BotMan\Drivers\Web\Extras\TypingIndicator;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class WebDriver extends HttpDriver
 {
@@ -46,7 +46,7 @@ class WebDriver extends HttpDriver
     protected $files = [];
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      */
     public function buildPayload(Request $request)
     {
@@ -57,7 +57,7 @@ class WebDriver extends HttpDriver
     }
 
     /**
-     * @param IncomingMessage $matchingMessage
+     * @param  IncomingMessage  $matchingMessage
      * @return \BotMan\BotMan\Users\User
      */
     public function getUser(IncomingMessage $matchingMessage)
@@ -76,7 +76,7 @@ class WebDriver extends HttpDriver
     }
 
     /**
-     * @param IncomingMessage $matchingMessage
+     * @param  IncomingMessage  $matchingMessage
      * @return void
      */
     public function types(IncomingMessage $matchingMessage)
@@ -89,8 +89,9 @@ class WebDriver extends HttpDriver
 
     /**
      * Send a typing indicator and wait for the given amount of seconds.
-     * @param IncomingMessage $matchingMessage
-     * @param float $seconds
+     *
+     * @param  IncomingMessage  $matchingMessage
+     * @param  float  $seconds
      * @return mixed
      */
     public function typesAndWaits(IncomingMessage $matchingMessage, float $seconds)
@@ -102,7 +103,7 @@ class WebDriver extends HttpDriver
     }
 
     /**
-     * @param  IncomingMessage $message
+     * @param  IncomingMessage  $message
      * @return \BotMan\BotMan\Messages\Incoming\Answer
      */
     public function getConversationAnswer(IncomingMessage $message)
@@ -166,14 +167,14 @@ class WebDriver extends HttpDriver
     }
 
     /**
-     * @param string|Question|OutgoingMessage $message
-     * @param IncomingMessage $matchingMessage
-     * @param array $additionalParameters
+     * @param  string|Question|OutgoingMessage  $message
+     * @param  IncomingMessage  $matchingMessage
+     * @param  array  $additionalParameters
      * @return Response
      */
     public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
     {
-        if (!$message instanceof WebAccess && !$message instanceof OutgoingMessage) {
+        if (! $message instanceof WebAccess && ! $message instanceof OutgoingMessage) {
             $this->errorMessage = 'Unsupported message type.';
             $this->replyStatusCode = 500;
         }
@@ -185,7 +186,7 @@ class WebDriver extends HttpDriver
     }
 
     /**
-     * @param mixed $payload
+     * @param  mixed  $payload
      * @return Response
      */
     public function sendPayload($payload)
@@ -253,9 +254,9 @@ class WebDriver extends HttpDriver
     /**
      * Low-level method to perform driver specific API requests.
      *
-     * @param string $endpoint
-     * @param array $parameters
-     * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
+     * @param  string  $endpoint
+     * @param  array  $parameters
+     * @param  \BotMan\BotMan\Messages\Incoming\IncomingMessage  $matchingMessage
      * @return void
      */
     public function sendRequest($endpoint, array $parameters, IncomingMessage $matchingMessage)
@@ -266,7 +267,7 @@ class WebDriver extends HttpDriver
     /**
      * Add potential attachments to the message object.
      *
-     * @param IncomingMessage $incomingMessage
+     * @param  IncomingMessage  $incomingMessage
      * @return IncomingMessage
      */
     protected function addAttachments($incomingMessage)
@@ -328,11 +329,11 @@ class WebDriver extends HttpDriver
 
     /**
      * @param $file
-     * @param string $mime
+     * @param  string  $mime
      * @return string
      */
     protected function getDataURI($file, $mime = '')
     {
-        return 'data: ' . (function_exists('mime_content_type') ? mime_content_type($file) : $mime) . ';base64,' . base64_encode(file_get_contents($file));
+        return 'data: '.(function_exists('mime_content_type') ? mime_content_type($file) : $mime).';base64,'.base64_encode(file_get_contents($file));
     }
 }
