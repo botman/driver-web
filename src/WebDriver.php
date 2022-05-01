@@ -173,7 +173,7 @@ class WebDriver extends HttpDriver
      */
     public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
     {
-        if (! $message instanceof WebAccess && ! $message instanceof OutgoingMessage) {
+        if (!$message instanceof WebAccess && !$message instanceof OutgoingMessage) {
             $this->errorMessage = 'Unsupported message type.';
             $this->replyStatusCode = 500;
         }
@@ -232,14 +232,14 @@ class WebDriver extends HttpDriver
         // Reset replies
         $this->replies = [];
 
-        Response::create(json_encode([
+        (new Response(json_encode([
             'status' => $this->replyStatusCode,
             'messages' => $messages,
         ]), $this->replyStatusCode, [
             'Content-Type' => 'application/json',
             'Access-Control-Allow-Credentials' => true,
             'Access-Control-Allow-Origin' => '*',
-        ])->send();
+        ]))->send();
     }
 
     /**
@@ -333,6 +333,6 @@ class WebDriver extends HttpDriver
      */
     protected function getDataURI($file, $mime = '')
     {
-        return 'data: '.(function_exists('mime_content_type') ? mime_content_type($file) : $mime).';base64,'.base64_encode(file_get_contents($file));
+        return 'data: ' . (function_exists('mime_content_type') ? mime_content_type($file) : $mime) . ';base64,' . base64_encode(file_get_contents($file));
     }
 }

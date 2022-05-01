@@ -8,12 +8,10 @@
         "Web"
     ],
     "homepage": "http://github.com/botman/driver-web",
-    "authors": [
-        {
-            "name": "Marcel Pociot",
-            "email": "m.pociot@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Marcel Pociot",
+        "email": "m.pociot@gmail.com"
+    }],
     "require": {
         "php": ">=7.0",
         "botman/botman": "~3.0"
@@ -22,7 +20,7 @@
         "botman/studio-addons": "~1.0",
         "illuminate/support": "~5.5.0",
         "phpunit/phpunit": "~5.0",
-        "mockery/mockery": "dev-master",
+        "mockery/mockery": "^1.1",
         "botman/driver-facebook": "~2.0",
         "ext-curl": "*"
     },
